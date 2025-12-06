@@ -1,4 +1,4 @@
-# URL Shortener Application
+# TinyGo - URL Shortener Application
 
 A full-stack URL shortener application with a modern frontend and Cloudflare Workers backend.
 
