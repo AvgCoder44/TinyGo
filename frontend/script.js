@@ -134,7 +134,14 @@ async function handleSubmit(e) {
  * Display the shortened URL result
  */
 function displayResult(shortUrl, originalUrl, code) {
-    shortUrlElement.href = shortUrl;
+    // Add cache-busting query parameter to prevent browser caching
+    // This ensures every click is tracked, even in regular browsing mode
+    const cacheBuster = `?t=${Date.now()}`;
+    const shortUrlWithCacheBust = shortUrl + cacheBuster;
+    
+    // Set href with cache-busting parameter (for clicking)
+    shortUrlElement.href = shortUrlWithCacheBust;
+    // Display clean URL without parameter (for readability)
     shortUrlElement.textContent = shortUrl;
     originalUrlElement.textContent = originalUrl;
     resultContainer.classList.remove('hidden');
@@ -166,7 +173,8 @@ function hideResult() {
  * Handle copy to clipboard
  */
 async function handleCopy() {
-    const shortUrl = shortUrlElement.textContent;
+    // Copy the URL with cache-busting parameter so it works when pasted
+    const shortUrl = shortUrlElement.href; // Use href which includes cache-busting parameter
     
     try {
         await navigator.clipboard.writeText(shortUrl);
