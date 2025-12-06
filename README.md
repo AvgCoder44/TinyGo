@@ -1,6 +1,6 @@
-# TinyGo - URL Shortener Application
+# TinyGo - URL Shortener
 
-A full-stack URL shortener application with a modern frontend and Cloudflare Workers backend.
+A modern, full-stack URL shortener built with Cloudflare Workers and Vite. Create short, memorable links with analytics tracking and custom aliases.
 
 ## Features
 
@@ -14,17 +14,20 @@ A full-stack URL shortener application with a modern frontend and Cloudflare Wor
 ## Project Structure
 
 ```
-url-shortener/
+TinyGo/
 ├── frontend/          # Frontend application (HTML, CSS, JS)
 │   ├── index.html
 │   ├── styles.css
 │   ├── script.js
-│   └── package.json
+│   ├── package.json
+│   └── vercel.json
 ├── worker/            # Cloudflare Worker backend
 │   ├── src/
 │   │   └── index.js
-│   └── wrangler.jsonc
+│   ├── wrangler.jsonc
+│   └── package.json
 ├── vercel.json        # Vercel deployment config
+├── DEPLOYMENT.md      # Detailed deployment guide
 └── README.md
 ```
 
@@ -48,8 +51,8 @@ url-shortener/
 
 1. **Clone the repository**
    ```bash
-   git clone <your-repo-url>
-   cd url-shortener
+   git clone https://github.com/AvgCoder44/TinyGo.git
+   cd TinyGo
    ```
 
 2. **Frontend Setup**
@@ -98,25 +101,20 @@ url-shortener/
    - Directory? **./** (current directory)
    - Override settings? **No**
 
-#### Option 2: Using GitHub Integration
+#### Option 2: Using GitHub Integration (Recommended)
 
-1. **Push code to GitHub**
-   ```bash
-   git init
-   git add .
-   git commit -m "Initial commit"
-   git remote add origin <your-github-repo-url>
-   git push -u origin main
-   ```
+1. **Code is already on GitHub**
+   - Repository: [github.com/AvgCoder44/TinyGo](https://github.com/AvgCoder44/TinyGo)
 
 2. **Connect to Vercel**
    - Go to [vercel.com](https://vercel.com)
+   - Sign in with GitHub
    - Click "Add New Project"
-   - Import your GitHub repository
+   - Import `TinyGo` repository
    - **Root Directory**: Set to `frontend`
    - Framework Preset: **Vite**
-   - Build Command: `npm run build`
-   - Output Directory: `dist`
+   - Build Command: `npm run build` (auto-detected)
+   - Output Directory: `dist` (auto-detected)
    - Click "Deploy"
 
 ### Deploy Backend to Cloudflare Workers
@@ -136,21 +134,22 @@ url-shortener/
    npm run deploy
    ```
 
-4. **Update Frontend API URL**
-   - After deployment, update `API_BASE_URL` in `frontend/script.js`:
-   ```javascript
-   const API_BASE_URL = 'https://your-worker-name.workers.dev';
-   ```
+4. **Frontend API Configuration**
+   - The frontend is configured to use: `https://worker.tinygo.workers.dev`
+   - If you deploy a new worker, update `API_BASE_URL` in `frontend/script.js`
 
 ## Configuration
 
 ### Frontend API Configuration
 
-Update the API URL in `frontend/script.js`:
+The frontend connects to the Cloudflare Worker backend. Current configuration:
 
 ```javascript
-const API_BASE_URL = 'https://your-worker.workers.dev';
+// frontend/script.js
+const API_BASE_URL = 'https://worker.tinygo.workers.dev';
 ```
+
+To use a different worker URL, update this value in `frontend/script.js`.
 
 ### Backend Configuration
 
@@ -176,7 +175,7 @@ Create a short URL
 **Response:**
 ```json
 {
-  "short_url": "https://worker.workers.dev/abc1234",
+  "short_url": "https://worker.tinygo.workers.dev/abc1234",
   "code": "abc1234",
   "expires_in": 2592000
 }
@@ -212,11 +211,40 @@ Get click analytics
 - No environment variables needed for frontend
 - Frontend uses public API endpoint
 
+## Live Demo
+
+- **Frontend**: Deployed on Vercel (configure in Vercel dashboard)
+- **Backend API**: `https://worker.tinygo.workers.dev`
+
+## Development
+
+### Making Changes
+
+1. **Frontend Changes**
+   ```bash
+   cd frontend
+   npm run dev  # Start dev server on localhost:3000
+   ```
+
+2. **Backend Changes**
+   ```bash
+   cd worker
+   npx wrangler dev --local  # Start local worker on localhost:8787
+   ```
+
+3. **Deploy Changes**
+   - Frontend: Push to GitHub → Vercel auto-deploys
+   - Backend: `cd worker && npm run deploy`
+
 ## License
 
-MIT
+MIT License - feel free to use this project for learning or production!
+
+## Author
+
+Built by [AvgCoder44](https://github.com/AvgCoder44)
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/AvgCoder44/TinyGo/issues).
 
