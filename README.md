@@ -213,7 +213,9 @@ Get click analytics
 
 ## Live Demo
 
-- **Frontend**: Deployed on Vercel (configure in Vercel dashboard)
+🌐 **Try it live**: [https://tinygo-one.vercel.app/](https://tinygo-one.vercel.app/)
+
+- **Frontend**: Deployed on Vercel
 - **Backend API**: `https://worker.tinygo.workers.dev`
 
 ## Development
